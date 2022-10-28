@@ -76,12 +76,14 @@ public class WwtbamMain {
                                     cont = input.nextLine();
                                     cont = cont.toUpperCase();
                                     switch (cont) {
-                                        case "Y" ->
+                                        case "Y" :
                                             cont = null;
-                                        case "N" ->
+                                        case "N" :
                                             System.exit(0);
-                                        default ->
+                                        default :
                                             System.out.println("Please enter valid input(Y/N)");
+                                            // number of lifelines needs to be fixed 
+                                            
 
                                     }
                                 }

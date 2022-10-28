@@ -1,0 +1,44 @@
+Fri Oct 28 16:16:26 NZDT 2022 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Fri Oct 28 16:16:26 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-1c97-4625-ffffe16b6905 
+on database directory C:\Users\Sonu\WWTBAM_Assignment_2\wwtbm with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Program%20Files/db-derby-10.14.2.0-lib/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Program Files\db-derby-10.14.2.0-lib
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\Sonu\WWTBAM_Assignment_2
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Oct 28 16:18:04 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a228c043-0184-1c97-4625-ffffe16b6905 
+on database directory C:\Users\Sonu\WWTBAM_Assignment_2\WWTBM_DB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Program%20Files/db-derby-10.14.2.0-lib/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Program Files\db-derby-10.14.2.0-lib
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\Sonu\WWTBAM_Assignment_2
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Oct 28 16:18:05 NZDT 2022:
+Shutting down instance a228c043-0184-1c97-4625-ffffe16b6905 on database directory C:\Users\Sonu\WWTBAM_Assignment_2\WWTBM_DB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Fri Oct 28 16:18:05 NZDT 2022 Thread[DRDAConnThread_2,5,main] (DATABASE = WWTBM_DB), (DRDAID = {3}), Database 'WWTBM_DB' shutdown.
+----------------------------------------------------------------
+Fri Oct 28 16:18:13 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance f14580e4-0184-1c97-4625-ffffe16b6905 
+on database directory C:\Users\Sonu\WWTBAM_Assignment_2\WWTBM_DB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Program%20Files/db-derby-10.14.2.0-lib/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Program Files\db-derby-10.14.2.0-lib
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\Sonu\WWTBAM_Assignment_2
+Database Class Loader started - derby.database.classpath=''

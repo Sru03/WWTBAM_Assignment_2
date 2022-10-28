@@ -42,20 +42,20 @@ public class Lifeline {
       choice = scan.nextLine();
      choice = choice.toUpperCase();
      switch(choice){
-         case "Y" -> {
+         case "Y" : {
              if(this.getLifeLine()>0)
              { System.out.println("Expert says answer is "+ this.getAnswer() );
              choice = null;
-             int noOfLifeline = 0; // changes added 
-              noOfLifeline--;      // changes added
+          
+               
              }
              else
              {System.out.println("Sorry no more lifelines left");
              choice = null;}
              }
-         case "N" -> {choice = null;
+         case "N": {choice = null;
              }
-         default -> System.out.println("Please enter valid input(Y/N)");
+         default : System.out.println("Please enter valid input(Y/N)");
              
      }
      }
