@@ -17,6 +17,10 @@ import java.io.FileReader;
 public class WwtbamMain {
 
     public static void main(String[] args) {
+        
+        new WWTBM_LoginGui().setVisible(true);
+        
+        
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Welcome to WHO WANTS TO BE A MILLIONAIRE!!");
@@ -77,7 +81,7 @@ public class WwtbamMain {
                                     cont = cont.toUpperCase();
                                     switch (cont) {
                                         case "Y" :
-                                            cont = null;
+                                            cont = null; // it is not leading back to the 2nd Ques 
                                         case "N" :
                                             System.exit(0);
                                         default :

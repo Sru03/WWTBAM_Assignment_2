@@ -45,9 +45,9 @@ public class Lifeline {
          case "Y" : {
              if(this.getLifeLine()>0)
              { System.out.println("Expert says answer is "+ this.getAnswer() );
-             choice = null;
+              choice = null;
           
-               
+                numberOfLifelines --;
              }
              else
              {System.out.println("Sorry no more lifelines left");
