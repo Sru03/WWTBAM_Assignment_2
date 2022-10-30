@@ -22,11 +22,14 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
     Connection con = Player_DB.connectdb();
     PreparedStatement ps = null;
     ResultSet rs = null;
+    public static String player_name_L;
+    public static int player_id_L;
     
     public WWTBM_LoginGui() {
         initComponents();
         Player_DB.connectdb();
         setLocation(500,200);
+        setResizable(false);
         
     }
 
@@ -157,8 +160,10 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
            
            if(rs.next()){
            JOptionPane.showMessageDialog(null, "Login successfully ..");
+           player_name_L = PlayerName.getText();
+           player_id_L = Integer.parseInt(PlayerID.getText());
            dispose();
-           new WWTBM_GamePageGui().setVisible(true);
+           new WWTBM_GamePageGui(player_id_L, player_name_L).setVisible(true);
            } else{
             JOptionPane.showMessageDialog(null, "Login Fail ..");
            }
@@ -167,16 +172,7 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
         
            JOptionPane.showMessageDialog(null, ex );
        }
-       
-       
-      String player_name_L = PlayerName.getText();
-      int player_id_L = Integer.parseInt(PlayerID.getText());
       
-      new WWTBM_StartGameGui(player_name_L, player_id_L).setVisible(true);
-     
-       
-       
-       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -192,7 +188,7 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
            if(rows > 0){
            JOptionPane.showMessageDialog(null, "SignIn successfully ..");
            dispose();
-           new WWTBM_GamePageGui().setVisible(true);
+           new WWTBM_GamePageGui(player_id_L, player_name_L).setVisible(true);
            } else{
             JOptionPane.showMessageDialog(null, "SignIn Fail ..");
            }

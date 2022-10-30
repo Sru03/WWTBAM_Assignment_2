@@ -30,40 +30,39 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
     /**
      * Creates new form WWTBM_StartGameGui
      */
-    
-      Connection con = Player_DB.connectdb();
-      PreparedStatement ps = null;
-      ResultSet rs = null;
-         
-      
-          
-      
-    public WWTBM_StartGameGui() {
+    Connection con = Player_DB.connectdb();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    public WWTBM_StartGameGui(int playerId, String playerName, boolean shouldContinue) {
         try {
             this.questionFile = Files.readAllLines(Paths.get("src/kbc/questions.txt"));
         } catch (IOException ex) {
             Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        player_id_S = playerId;
+        player_name_S = playerName;
 
+        if (shouldContinue) {
+            String load = "SELECT QUESTION_NO FROM PLAYER_DB WHERE PLAYER_ID=" + player_id_S;
+            try {
+                ps = con.prepareStatement(load);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    String result = rs.getString(1);
+                    if (result != null) {
+                        curQuestionNo = Integer.parseInt(result);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         startQuestionFrom(curQuestionNo);
-        
-        setSize(960,550);
-        setLocation(300,150);
-        Player_DB.connectdb();
 
-    }
-
-    public WWTBM_StartGameGui(int questionNo) {
-        try {
-            this.questionFile = Files.readAllLines(Paths.get("src/kbc/questions.txt"));
-        } catch (IOException ex) {
-            Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        initComponents();
-       
-
-        startQuestionFrom(questionNo);
+        setSize(960, 550);
+        setLocation(300, 150);
 
     }
 
@@ -73,16 +72,8 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
     PrizeMoney pm = new PrizeMoney(); // to get the Prize amount 
     String answer = ""; //variable that  stores the right answer
     List<String> questionFile;
-
-    
     String player_name_S;
     int player_id_S;
-    
-    WWTBM_StartGameGui(String player_name_L, int player_id_L) {
-       this.player_name_S = player_name_L;
-       this.player_id_S = player_id_L;
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,6 +100,7 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
         Lifeline1 = new javax.swing.JButton();
         Lifeline2 = new javax.swing.JButton();
         Lifeline3 = new javax.swing.JButton();
+        Back = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -188,7 +180,7 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
                 save_n_exitActionPerformed(evt);
             }
         });
-        getContentPane().add(save_n_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, -1));
+        getContentPane().add(save_n_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, -1, -1));
 
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +188,7 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
                 exitActionPerformed(evt);
             }
         });
-        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, -1, -1));
+        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, -1, -1));
 
         Lifeline1.setText("Lifeline1");
         Lifeline1.addActionListener(new java.awt.event.ActionListener() {
@@ -221,6 +213,14 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
             }
         });
         getContentPane().add(Lifeline3, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, -1, -1));
+
+        Back.setText("Back");
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,55 +251,59 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
 
     private void save_n_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_n_exitActionPerformed
         // TODO add your handling code here:
-         String Save = //"SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = '" + player_name_S+"' AND PLAYER_ID ='"+player_id_S+"' /n"
-                 " UPDATE  PLAYER_DB   SET QUESTION_NO = " +curQuestionNo + " WHERE PLAYER_NAME = '" + player_name_S + "' ";
-       
-       
-       try{
-           ps = con.prepareStatement(Save);
-            ps.execute();
-           
-          // JOptionPane.showMessageDialog(null, "Saved" );
-          // dispose();
-       
-       }catch(SQLException ex ){
-        
-          
-           JOptionPane.showMessageDialog(null, ex );
-       }
-        
-        
-         
+        String Save = " UPDATE  PLAYER_DB   SET QUESTION_NO = " + curQuestionNo + ", LIFELINE_NO = " + noOfLifeline + " WHERE PLAYER_NAME = '" + player_name_S + "' \n"
+                + "AND PLAYER_ID = " + player_id_S + "";
+
+        try {
+            ps = con.prepareStatement(Save);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Saved");
+            dispose();
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+
     }//GEN-LAST:event_save_n_exitActionPerformed
 
     private void Lifeline1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline1ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null , "Expert says the  right answer is  " + answer);
-        noOfLifeline --;
+        JOptionPane.showMessageDialog(null, "Expert says the  right answer is  " + answer);
+        noOfLifeline--;
         Lifeline1.setEnabled(false);
-       
+
     }//GEN-LAST:event_Lifeline1ActionPerformed
 
     private void Lifeline2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline2ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null , "There is a 50% chance that the answer is  " + answer);
-         noOfLifeline --;
-          Lifeline2.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "There is a 50% chance that the answer is  " + answer);
+        noOfLifeline--;
+        Lifeline2.setEnabled(false);
     }//GEN-LAST:event_Lifeline2ActionPerformed
 
     private void Lifeline3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline3ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null , "The Friend says the answer is  " + answer);
-        
-          noOfLifeline --;
-          Lifeline3.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "The Friend says the answer is  " + answer);
+
+        noOfLifeline--;
+        Lifeline3.setEnabled(false);
     }//GEN-LAST:event_Lifeline3ActionPerformed
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new WWTBM_GamePageGui(false).setVisible(true);
+    }//GEN-LAST:event_BackActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
     private javax.swing.JButton Lifeline1;
     private javax.swing.JButton Lifeline2;
     private javax.swing.JButton Lifeline3;
@@ -345,21 +349,10 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
             fileLineNo++;
             curQuestionNo++;
             askQuestion();
-        } 
-        
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "You answered incorrectly!\n Prize won:" + pm.getLostMoney(), "Game Over!", JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

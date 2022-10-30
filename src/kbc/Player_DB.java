@@ -31,13 +31,9 @@ public class Player_DB {
         Connection connection = null;
          
         try{
-//            try {
-//                Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-//            } catch (ClassNotFoundException ex) {
-//                Logger.getLogger(Player_DB.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+//            
          connection = DriverManager.getConnection(URL, USER_NAME,PASSWORD);
-         // java.sql.Connection con = DriverManager.getConnection(URL,USER_NAME , PASSWORD);
+        
            return connection;
         } catch (SQLException ex){
             Logger.getLogger(Player_DB.class.getName()).log(Level.SEVERE, null, ex);
