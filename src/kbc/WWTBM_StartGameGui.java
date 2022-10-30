@@ -4,6 +4,18 @@
  */
 package kbc;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sonu
@@ -13,9 +25,43 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
     /**
      * Creates new form WWTBM_StartGameGui
      */
+    
+      Connection con = Player_DB.connectdb();
+      PreparedStatement ps = null;
+      ResultSet rs = null;
+      
     public WWTBM_StartGameGui() {
+        try {
+            this.questionFile = Files.readAllLines(Paths.get("src/kbc/questions.txt"));
+        } catch (IOException ex) {
+            Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
+
+        startQuestionFrom(curQuestionNo);
+
     }
+
+    public WWTBM_StartGameGui(int questionNo) {
+        try {
+            this.questionFile = Files.readAllLines(Paths.get("src/kbc/questions.txt"));
+        } catch (IOException ex) {
+            Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        initComponents();
+        Player_DB.connectdb();
+
+        startQuestionFrom(questionNo);
+
+    }
+
+    int noOfLifeline = 3; // Number of lifelines available in this game 
+    int curQuestionNo = 1;
+    int fileLineNo = 0; //variable for the number of lines in the askQuestion text file that is going to be read from
+    PrizeMoney pm = new PrizeMoney(); // to get the Prize amount 
+    String answer = ""; //variable that  stores the right answer
+    List<String> questionFile;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,72 +72,271 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel2 = new javax.swing.JLabel();
+        QuestionLabel = new javax.swing.JLabel();
+        OptionABtn = new javax.swing.JButton();
+        OptionBBtn = new javax.swing.JButton();
+        OptionDBtn = new javax.swing.JButton();
+        OptionCBtn = new javax.swing.JButton();
+        QuestionPrizeLabel = new javax.swing.JLabel();
+        save_n_exit = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
+        Lifeline1 = new javax.swing.JButton();
+        Lifeline2 = new javax.swing.JButton();
+        Lifeline3 = new javax.swing.JButton();
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Start Game here ");
+        jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
+        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 227, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 548, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 230, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 231, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 196, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 197, Short.MAX_VALUE)))
-        );
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Welcome to Who Wants To Be A Millionaire");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 455, 52));
+
+        QuestionLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        QuestionLabel.setText("Question");
+        QuestionLabel.setToolTipText("");
+        QuestionLabel.setName("QuestionLabel"); // NOI18N
+        getContentPane().add(QuestionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 640, 36));
+
+        OptionABtn.setText("A.");
+        OptionABtn.setName("Option1Btn"); // NOI18N
+        OptionABtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionABtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OptionABtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 270, 40));
+
+        OptionBBtn.setText("B.");
+        OptionBBtn.setName("Option2Btn"); // NOI18N
+        OptionBBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionBBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OptionBBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 270, 40));
+
+        OptionDBtn.setText("D.");
+        OptionDBtn.setName("Option2Btn"); // NOI18N
+        OptionDBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionDBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OptionDBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 270, 40));
+
+        OptionCBtn.setText("C.");
+        OptionCBtn.setName("Option2Btn"); // NOI18N
+        OptionCBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionCBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OptionCBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 270, 40));
+
+        QuestionPrizeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        QuestionPrizeLabel.setText("Q1 for $");
+        getContentPane().add(QuestionPrizeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 160, 30));
+
+        save_n_exit.setText("Save & Exit");
+        save_n_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_n_exitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(save_n_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, -1));
+
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, -1, -1));
+
+        Lifeline1.setText("Lifeline1");
+        Lifeline1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Lifeline1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Lifeline1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
+
+        Lifeline2.setText("Lifeline2");
+        Lifeline2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Lifeline2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Lifeline2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, -1, -1));
+
+        Lifeline3.setText("Lifeline3");
+        Lifeline3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Lifeline3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Lifeline3, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void OptionABtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionABtnActionPerformed
+        // TODO add your handling code here:
+        handleAnswer("A");
+    }//GEN-LAST:event_OptionABtnActionPerformed
+
+    private void OptionBBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionBBtnActionPerformed
+        // TODO add your handling code here:
+        handleAnswer("B");
+    }//GEN-LAST:event_OptionBBtnActionPerformed
+
+    private void OptionCBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionCBtnActionPerformed
+        handleAnswer("C");
+    }//GEN-LAST:event_OptionCBtnActionPerformed
+
+    private void OptionDBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionDBtnActionPerformed
+        // TODO add your handling code here:
+        handleAnswer("D");
+    }//GEN-LAST:event_OptionDBtnActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void save_n_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_n_exitActionPerformed
+        // TODO add your handling code here:
+//         String Sql = "SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = ? AND PLAYER_ID =? /n"
+//                 + "INSERT INTO  PLAYER_DB(QUESTION_NO , LIFELINE_NO)   VALUES(? ,?)";
+//       
+//       try{
+//           ps = con.prepareStatement(Sql);
+//           
+//           
+////           
+//           ps.setInt(1, curQuestionNo); // so far it is just reading from the data base to compare the values entered 
+//           ps.setInt(2, noOfLifeline);   // it is not writing any value to the database
+//           ps.executeUpdate();
+//           
+//           
+//       
+//       }catch(SQLException ex ){
+//        
+//          
+//           JOptionPane.showMessageDialog(null, ex );
+//       }
+        
+        
+         
+    }//GEN-LAST:event_save_n_exitActionPerformed
+
+    private void Lifeline1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline1ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null , "Expert says the  right answer is  " + answer);
+        noOfLifeline --;
+       
+    }//GEN-LAST:event_Lifeline1ActionPerformed
+
+    private void Lifeline2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline2ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null , "There is a 50% chance that the answer is  " + answer);
+         noOfLifeline --;
+    }//GEN-LAST:event_Lifeline2ActionPerformed
+
+    private void Lifeline3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline3ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null , "The Friend says the answer is  " + answer);
+        
+         noOfLifeline --;
+    }//GEN-LAST:event_Lifeline3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WWTBM_StartGameGui().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton Lifeline1;
+    private javax.swing.JButton Lifeline2;
+    private javax.swing.JButton Lifeline3;
+    private javax.swing.JButton OptionABtn;
+    private javax.swing.JButton OptionBBtn;
+    private javax.swing.JButton OptionCBtn;
+    private javax.swing.JButton OptionDBtn;
+    private javax.swing.JLabel QuestionLabel;
+    private javax.swing.JLabel QuestionPrizeLabel;
+    private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton save_n_exit;
     // End of variables declaration//GEN-END:variables
+
+    private void startQuestionFrom(int questionNo) {
+        curQuestionNo = questionNo;
+        fileLineNo = ((curQuestionNo - 1) * 6);
+        askQuestion();
+    }
+
+    private void askQuestion() {
+        QuestionPrizeLabel.setText("Q " + pm.getQuestionNo(fileLineNo) + " for $" + pm.getPrizeMoney());
+
+        String Question = questionFile.get(fileLineNo);
+        QuestionLabel.setText(Question);
+        // Answers
+        OptionABtn.setText(questionFile.get(++fileLineNo));
+        OptionBBtn.setText(questionFile.get(++fileLineNo));
+        OptionCBtn.setText(questionFile.get(++fileLineNo));
+        OptionDBtn.setText(questionFile.get(++fileLineNo));
+        // Get correct answer
+        answer = questionFile.get(++fileLineNo);
+    }
+
+    private void handleAnswer(String userAns) {
+        if (userAns.equalsIgnoreCase(answer)) {
+            // correct
+            JOptionPane.showMessageDialog(null, "That is the correct answer!");
+            fileLineNo++;
+            curQuestionNo++;
+            askQuestion();
+        } else {
+            JOptionPane.showMessageDialog(null, "You answered incorrectly!\n Prize won:" + pm.getLostMoney(), "Game Over!", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
