@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+* Student Name : Srushti Madaiah Basavaraju 
+* Student ID : 19092262
+* PDC-SC Project Group 20
+*
+*  Git hub link:
+*   https://github.com/Sru03/WWTBAM_Assignment_2
+*
  */
 package kbc;
 

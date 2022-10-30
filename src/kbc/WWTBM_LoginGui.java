@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+* Student Name : Srushti Madaiah Basavaraju 
+* Student ID : 19092262
+* PDC-SC Project Group 20
+*
+*  Git hub link:
+*   https://github.com/Sru03/WWTBAM_Assignment_2
+*
  */
 package kbc;
 
@@ -21,6 +26,8 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
     public WWTBM_LoginGui() {
         initComponents();
         Player_DB.connectdb();
+        setLocation(500,200);
+        
     }
 
     /**
@@ -137,9 +144,12 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String LogIn = "SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = ? AND PLAYER_ID =?";
+      
+        
+        String LogIn = "SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = ? AND PLAYER_ID =?";
        
        try{
+           
            ps = con.prepareStatement(LogIn);
            ps.setString(1, PlayerName.getText()); // so far it is just reading from the data base to compare the values entered 
            ps.setString(2, PlayerID.getText());   // it is not writing any value to the database
@@ -157,6 +167,14 @@ public class WWTBM_LoginGui extends javax.swing.JFrame {
         
            JOptionPane.showMessageDialog(null, ex );
        }
+       
+       
+      String player_name_L = PlayerName.getText();
+      int player_id_L = Integer.parseInt(PlayerID.getText());
+      
+      new WWTBM_StartGameGui(player_name_L, player_id_L).setVisible(true);
+     
+       
        
        
     }//GEN-LAST:event_jButton1ActionPerformed

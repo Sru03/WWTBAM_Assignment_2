@@ -1,3 +1,17 @@
+
+/*
+* Student Name : Srushti Madaiah Basavaraju 
+* Student ID : 19092262
+* PDC-SC Project Group 20
+*
+*  Git hub link:
+*   https://github.com/Sru03/WWTBAM_Assignment_2
+*
+ */
+
+
+
+
 package kbc;
 
 import java.io.BufferedReader;
@@ -61,8 +75,8 @@ public class WwtbamMain {
                                 n++;
                             }
                             answer = Files.readAllLines(Paths.get("src/kbc/questions.txt")).get(n); // reads the line which has the right answer and stores it in answer variable
-                            Lifeline lifeline = new Lifeline(noOfLifeline, answer); // gives user an option of using the lifeline
-                            lifeline.UseLifeline();//displayes the right answer
+                           // Lifeline lifeline = new Lifeline(noOfLifeline, answer); // gives user an option of using the lifeline
+                            //lifeline.UseLifeline();//displayes the right answer
                            // noOfLifeline--; // keeps the count on how many lifelines are left
                             System.out.println("PLEASE ENTER THE ANSWER (A/B/C/D)");
 

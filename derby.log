@@ -1,2 +1,13 @@
-Sun Oct 30 21:43:40 NZDT 2022 : Could not listen on port 1527 on host localhost:
- java.net.BindException: Address already in use: JVM_Bind
+----------------------------------------------------------------
+Mon Oct 31 03:43:29 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-2959-0167-00000a974140 
+on database directory C:\Users\Sonu\WWTBAM_Assignment_2\PLAYER_DB with class loader sun.misc.Launcher$AppClassLoader@55f96302 
+Loaded from file:/C:/Users/Sonu/OneDrive/Documents/NetBeansProjects/PDC_Tutorials/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Users\Sonu\WWTBAM_Assignment_2
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

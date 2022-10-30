@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+* Student Name : Srushti Madaiah Basavaraju 
+* Student ID : 19092262
+* PDC-SC Project Group 20
+*
+*  Git hub link:
+*   https://github.com/Sru03/WWTBAM_Assignment_2
+*
  */
 package kbc;
 
@@ -25,11 +30,14 @@ public class WWTBM_GamePageGui extends javax.swing.JFrame {
      */
     public WWTBM_GamePageGui() {
         initComponents();
+        setLocation(300,150);
         music("src/kbc/main_theme_trm.wav");
     }
 
     public WWTBM_GamePageGui(boolean withMusic) {
         initComponents();
+        
+      
         if (withMusic) {
             music("src/kbc/main_theme_trm.wav");
 
@@ -76,6 +84,11 @@ public class WWTBM_GamePageGui extends javax.swing.JFrame {
         });
 
         jButton3.setText("Continue");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kbc/millionare.PNG"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -157,6 +170,16 @@ public class WWTBM_GamePageGui extends javax.swing.JFrame {
         startGame.show(); // display start game page here 
         dispose();  // close current frame after open start page
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        dispose();
+         new WWTBM_StartGameGui().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

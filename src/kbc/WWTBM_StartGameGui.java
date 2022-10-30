@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+* Student Name : Srushti Madaiah Basavaraju 
+* Student ID : 19092262
+* PDC-SC Project Group 20
+*
+*  Git hub link:
+*   https://github.com/Sru03/WWTBAM_Assignment_2
+*
  */
 package kbc;
 
@@ -29,6 +34,9 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
       Connection con = Player_DB.connectdb();
       PreparedStatement ps = null;
       ResultSet rs = null;
+         
+      
+          
       
     public WWTBM_StartGameGui() {
         try {
@@ -39,6 +47,10 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
         initComponents();
 
         startQuestionFrom(curQuestionNo);
+        
+        setSize(960,550);
+        setLocation(300,150);
+        Player_DB.connectdb();
 
     }
 
@@ -49,7 +61,7 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
             Logger.getLogger(WWTBM_StartGameGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        Player_DB.connectdb();
+       
 
         startQuestionFrom(questionNo);
 
@@ -61,6 +73,15 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
     PrizeMoney pm = new PrizeMoney(); // to get the Prize amount 
     String answer = ""; //variable that  stores the right answer
     List<String> questionFile;
+
+    
+    String player_name_S;
+    int player_id_S;
+    
+    WWTBM_StartGameGui(String player_name_L, int player_id_L) {
+       this.player_name_S = player_name_L;
+       this.player_id_S = player_id_L;
+    }
     
 
     /**
@@ -230,25 +251,22 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
 
     private void save_n_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_n_exitActionPerformed
         // TODO add your handling code here:
-//         String Sql = "SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = ? AND PLAYER_ID =? /n"
-//                 + "INSERT INTO  PLAYER_DB(QUESTION_NO , LIFELINE_NO)   VALUES(? ,?)";
-//       
-//       try{
-//           ps = con.prepareStatement(Sql);
-//           
-//           
-////           
-//           ps.setInt(1, curQuestionNo); // so far it is just reading from the data base to compare the values entered 
-//           ps.setInt(2, noOfLifeline);   // it is not writing any value to the database
-//           ps.executeUpdate();
-//           
-//           
-//       
-//       }catch(SQLException ex ){
-//        
-//          
-//           JOptionPane.showMessageDialog(null, ex );
-//       }
+         String Save = //"SELECT * FROM PLAYER_DB   WHERE   PLAYER_NAME = '" + player_name_S+"' AND PLAYER_ID ='"+player_id_S+"' /n"
+                 " UPDATE  PLAYER_DB   SET QUESTION_NO = " +curQuestionNo + " WHERE PLAYER_NAME = '" + player_name_S + "' ";
+       
+       
+       try{
+           ps = con.prepareStatement(Save);
+            ps.execute();
+           
+          // JOptionPane.showMessageDialog(null, "Saved" );
+          // dispose();
+       
+       }catch(SQLException ex ){
+        
+          
+           JOptionPane.showMessageDialog(null, ex );
+       }
         
         
          
@@ -258,6 +276,7 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null , "Expert says the  right answer is  " + answer);
         noOfLifeline --;
+        Lifeline1.setEnabled(false);
        
     }//GEN-LAST:event_Lifeline1ActionPerformed
 
@@ -265,13 +284,15 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null , "There is a 50% chance that the answer is  " + answer);
          noOfLifeline --;
+          Lifeline2.setEnabled(false);
     }//GEN-LAST:event_Lifeline2ActionPerformed
 
     private void Lifeline3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lifeline3ActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null , "The Friend says the answer is  " + answer);
         
-         noOfLifeline --;
+          noOfLifeline --;
+          Lifeline3.setEnabled(false);
     }//GEN-LAST:event_Lifeline3ActionPerformed
 
     /**
@@ -324,7 +345,9 @@ public class WWTBM_StartGameGui extends javax.swing.JFrame {
             fileLineNo++;
             curQuestionNo++;
             askQuestion();
-        } else {
+        } 
+        
+        else {
             JOptionPane.showMessageDialog(null, "You answered incorrectly!\n Prize won:" + pm.getLostMoney(), "Game Over!", JOptionPane.ERROR_MESSAGE);
             dispose();
         }
